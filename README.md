@@ -1,0 +1,2 @@
+# Maqr
+QR Code maker
