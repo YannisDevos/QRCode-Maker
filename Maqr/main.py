@@ -9,7 +9,7 @@ FC = "black"
 
 def chooseBackColor():
     global BC
-    backColor = colorchooser.askcolor(title="BackQr ColorPicker")
+    backColor = colorchooser.askcolor(title="QoloR")
     
     strcolor = str(backColor)
     
@@ -21,7 +21,7 @@ def chooseBackColor():
 
 def chooseFillColor():
     global FC
-    fillColor = colorchooser.askcolor(title="FillQr ColorPicker")
+    fillColor = colorchooser.askcolor(title="QoloR")
     
     strcolor = str(fillColor)
     
@@ -42,11 +42,11 @@ def goQR():
     radButtonTxt = ""
     
     if(url == ""):
-        showwarning("Attention !","Vous devez entrez une URL valide !")
+        showwarning("Warning !","You have to enter a valid URL !")
     elif(filename == ""):
-        showwarning("Attention !","Vous devez entrez un nom de fichier valide !")
+        showwarning("Warning !","You have to enter a valid file name !")
     elif(radButton == 0):
-        showwarning("Attention !", "Vous devez cocher une extension pour votre fichier !")
+        showwarning("Warning !", "You have to choose an extension for your file !")
     else:
         if(radButton == 1):
             radButtonTxt = ".png"
@@ -54,13 +54,18 @@ def goQR():
             radButtonTxt = ".jpg"
             
         createQrCode(url,box,border,BC,FC,filename,radButtonTxt)
-        showinfo("Résultat","Votre QRCode a bien été généré.")
+        showinfo("Results","Your QR Code is ready !")
         
 def printQR():
+    url = urlInput.get()
     box = spin1.get()
     border = spin2.get()
     
-    showQR(box,border,BC,FC)
+    if(url == ""):
+        showwarning("Warning !","You have to enter a valid URL !")
+    else:
+        showQR(url,box,border,BC,FC)
+        
     
 def resetColor():
     global BC,FC
@@ -159,7 +164,7 @@ blank.pack()
 
 # --------------------------
 
-colorFrame = LabelFrame(window, text="Color", padx=50, pady=20)
+colorFrame = LabelFrame(window, text="Colors", padx=50, pady=20)
 colorFrame.pack()
 
 frame4 = Frame(colorFrame)
@@ -184,7 +189,7 @@ blank.pack()
 frame5 = Frame(colorFrame)
 frame5.pack()
 
-fillColorPick = Button(frame5, text="Fill Color", command=chooseFillColor, width=20)
+fillColorPick = Button(frame5, text="QR Color", command=chooseFillColor, width=20)
 fillColorPick.pack(side=LEFT)
 
 blank = Label(frame5, text="")
@@ -206,13 +211,13 @@ blank.pack()
 colorButtonFrame = Frame(colorFrame)
 colorButtonFrame.pack() 
 
-resetColorButton = Button(colorButtonFrame,text="Reset color", command=resetColor, background="lightgrey")
+resetColorButton = Button(colorButtonFrame,text="Reset", command=resetColor, background="lightgrey", width=10)
 resetColorButton.pack(side=LEFT)
 
 blank = Label(colorButtonFrame, text="")
 blank.pack(side=LEFT)
 
-randomColorButton = Button(colorButtonFrame,text="Random Color", command=chooseRandomColor, background="lightgrey")
+randomColorButton = Button(colorButtonFrame,text="Random", command=chooseRandomColor, background="lightgrey", width=10)
 randomColorButton.pack(side=RIGHT)
 
 # --------------------------
@@ -257,13 +262,13 @@ blank.pack()
 frame8 = Frame(window)
 frame8.pack()
 
-showButton = Button(frame8, text="Voir le QRCode",width=15, height=2, command=printQR)
+showButton = Button(frame8, text="Show QRCode",width=15, height=2, command=printQR)
 showButton.pack(side=LEFT)
 
 blank = Label(frame8, text="")
 blank.pack(side=LEFT)
 
-finalButton = Button(frame8, text="Générer votre QRCode", width=40, height=2, background='lightgreen', command=goQR)
+finalButton = Button(frame8, text="Generate", width=40, height=2, background='lightgreen', command=goQR)
 finalButton.pack(side=RIGHT)
 
 window.mainloop()

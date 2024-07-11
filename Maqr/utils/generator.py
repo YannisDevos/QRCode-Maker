@@ -19,7 +19,8 @@ def getColor(txt):
         
     return nvtxt
 
-def showQR(boxSize,borderSize,bc,fc):
+def showQR(url,boxSize,borderSize,bc,fc):
     qr = QRCode(box_size= boxSize, border= borderSize)
+    qr.add_data(url)
     img = qr.make_image(fill_color=fc, back_color=bc)
     img.show()
