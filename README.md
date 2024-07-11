@@ -20,3 +20,16 @@ Or run this command in a terminal while in the project folder:
 ```
 > python .\main.py
 ```
+
+### Linux
+
+To run the application on `Linux` you can :
+
+* Directly run main.py file with your IDE
+* Run Maqr.sh
+
+Or run this command in a terminal while in the project folder:
+
+```
+> python main.py
+```
