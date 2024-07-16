@@ -34,9 +34,9 @@ You have to enter an URL, a file name and choose between PNG or JPG to save your
 
 It's possible to see the QR code without save him with `Show QRCode` button.
 
-![MainQR](./Maqr/utils/img/MainQR.png)
-![ColorPick](./Maqr/utils/img/ColorPick.png)
-![QR](./Maqr/utils/img/QR.png)
+![MainQR](./readmeUtils/MainQR.png)
+![ColorPick](./readmeUtils//ColorPick.png)
+![QR](./readmeUtils//QR.png)
 
 > :warning: **It is possible that colors that are too strong do not make the QR code work !**
 
@@ -46,24 +46,24 @@ It's possible to see the QR code without save him with `Show QRCode` button.
 
 To run the application on `Windows` you can :
 
-* Directly run main.py file with your IDE
-* Run Maqr.bat
+* Directly run Maqr.py file with your IDE
+* Run **Maqr.exe**
 
-Or run this command in a terminal while in the project folder:
+Or run this command in a terminal while in the project folder :
 
 ```
-> python .\main.py
+> python .\Maqr.py
 ```
 
 ### Linux
 
 To run the application on `Linux` you can :
 
-* Directly run main.py file with your IDE
-* Run Maqr.sh
+* Directly run Maqr.py file with your IDE
+* Run **UnixMaqr.sh**
 
-Or run this command in a terminal while in the project folder:
+Or run this command in a terminal while in the project folder :
 
 ```
-> python main.py
+> python Maqr.py
 ```
