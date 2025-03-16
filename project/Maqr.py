@@ -145,7 +145,7 @@ window.title("Maqr")
 blank = Label(window, text="")
 blank.pack()
 
-label = Label(window, text="QrCode GENERATOR", font=("SimSun",25))
+label = Label(window, text="MaQr", font=("'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",25))
 label.pack()
 
 blank = Label(window, text="")
