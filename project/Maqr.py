@@ -3,33 +3,35 @@ from utils.generator import *
 from tkinter import colorchooser
 from tkinter.messagebox import *
 from random import randint
+from utils.Saver import *
+import webbrowser;
+from tkinter.filedialog import askopenfilename
 
+SAVEFILE = "project/utils/csv/save.csv"
 BC = "white"
 FC = "black"
+defaultDatas = qrDatas("default", 20,2, "white", "black")
 
 def chooseBackColor():
     global BC
     backColor = colorchooser.askcolor(title="QoloR")
     
-    strcolor = str(backColor)
+    if(backColor[1] != None):
+        backLabel.config(text="     ", background=backColor[1])
+        BC = backColor[1]
     
-    nvcolor = getColor(strcolor)
-    
-    backLabel.config(text="     ", background=nvcolor)
-    BC = nvcolor
+    return
 
 
 def chooseFillColor():
     global FC
     fillColor = colorchooser.askcolor(title="QoloR")
     
-    strcolor = str(fillColor)
+    if(fillColor[1] != None):
+        fillLabel.config(text="     ", background=fillColor[1])
+        FC = fillColor[1]
+    return
     
-    nvcolor = getColor(strcolor)
-    
-    fillLabel.config(text="     ", background=nvcolor)
-    
-    FC = nvcolor
 
 
 def isOnlyNumber(s):
@@ -63,32 +65,17 @@ def goQR():
     url = urlInput.get()
     box = spin1.get()
     border = spin2.get()
-    filename = filenameInput.get()
-    
-    radButton = var.get()
-    radButtonTxt = ""
     
     if(sizesAreValid(box,border)):
         if(url == ""):
             showwarning("Warning !","You have to enter a valid URL !")
-        elif(filename == ""):
-            showwarning("Warning !","You have to enter a valid file name !")
-        elif(radButton == 0):
-            showwarning("Warning !", "You have to choose an extension for your file !")
-        else:
-            if(radButton == 1):
-                radButtonTxt = ".png"
-            else:
-                radButtonTxt = ".jpg"
-                
-            createQrCode(url,box,border,BC,FC,filename,radButtonTxt)
+        else :
+            createQrCode(url,box,border,BC,FC)
             showinfo("Results","Your QR Code is ready !")
     else:
         showwarning("Warning !", "Invalid sizes !")
         
     
-
-
 def printQR():
     url = urlInput.get()
     box = spin1.get()
@@ -133,11 +120,57 @@ def chooseRandomColor():
     backLabel.config(background=BC)
     fillLabel.config(background=FC)
     
+    
+# MenuBar Functions
+    
+def openHelp():
+    webbrowser.open("https://github.com/YannisDevos/QRCode-Maker")
+
+def changeEntryText(widget, text):
+    widget.delete(0, len(widget.get()))
+    widget.insert(0, text)
+    return
+
+def loadMenu():
+    objectdatas = readSavedDatas(SAVEFILE)
+    
+    datasListToLoad = Toplevel(window)
+    
+    datasListToLoad.minsize(200,100)
+    
+    for elt in objectdatas :
+        aFrame = Frame(datasListToLoad)
+        Label(aFrame, text=elt.url).pack(side=LEFT)
+        Label(aFrame, background=elt.bgColor, width=2).pack(side=LEFT)
+        Label(aFrame, background=elt.fillColor, width=2).pack(side=LEFT)
+        Button(aFrame, text="Load", command=lambda data=elt: loaddata(data)).pack(side=RIGHT)
+        aFrame.pack()
+
+def loaddata(datas):
+    global BC
+    global FC
+    
+    changeEntryText(urlInput, datas.url)
+    
+    spin1.config(textvariable=DoubleVar(value=datas.boxSize))
+    spin2.config(textvariable=DoubleVar(value=datas.borderSize))
+    
+    BC = datas.bgColor
+    backLabel.config(background=BC)
+
+    FC = datas.fillColor
+    fillLabel.config(background=FC)
+
+def resetLoadedDatas():
+    loaddata(defaultDatas)
 
 
+
+
+# ----------------FRONTEND----------------
 
 window = Tk()
-window.geometry("450x600")
+window.geometry("450x525")
 window.resizable(width=False, height=False)
 # window.iconbitmap("logo.ico") // To show Maqr logo at the app corner and taskbar (not working on .exe)
 window.title("Maqr")
@@ -156,11 +189,12 @@ blank.pack()
 frame1 = Frame(window)
 frame1.pack()
 
+urlLabel = Label(frame1, text="URL : ")
+urlLabel.pack(side=LEFT)
+
 urlInput = Entry(frame1, width=50)
 urlInput.pack(side=RIGHT)
 
-urlLabel = Label(frame1, text="URL : ")
-urlLabel.pack(side=LEFT)
 
 blank = Label(window, text="")
 blank.pack()
@@ -173,7 +207,7 @@ frame2.pack()
 scale1Label = Label(frame2, text="     Box size : ")
 scale1Label.pack(side=LEFT)
 
-def1 = DoubleVar(value=20)
+def1 = DoubleVar(value=defaultDatas.boxSize)
 spin1 = Spinbox(frame2,from_=0, to=100, textvariable=def1)
 spin1.pack(side=RIGHT)
 
@@ -188,7 +222,7 @@ frame3.pack()
 scale2Label = Label(frame3, text="Border size : ")
 scale2Label.pack(side=LEFT)
 
-def2 = DoubleVar(value=2)
+def2 = DoubleVar(value=defaultDatas.borderSize)
 spin2 = Spinbox(frame3,from_=0, to=100, textvariable=def2)
 spin2.pack(side=RIGHT)
 
@@ -214,7 +248,7 @@ backColorPick.pack(side=LEFT)
 blank = Label(frame4, text="")
 blank.pack(side=LEFT)
 
-backLabel = Label(frame4,text="     ", background=BC)
+backLabel = Label(frame4,text="     ", background=defaultDatas.bgColor)
 backLabel.pack(side=RIGHT)
 
 # --------------------------
@@ -233,7 +267,7 @@ fillColorPick.pack(side=LEFT)
 blank = Label(frame5, text="")
 blank.pack(side=LEFT)
 
-fillLabel = Label(frame5,text="     ", background=FC)
+fillLabel = Label(frame5,text="     ", background=defaultDatas.fillColor)
 fillLabel.pack(side=RIGHT)
 
 # --------------------------
@@ -265,38 +299,6 @@ blank.pack()
 
 # --------------------------
 
-frame6 = Frame(window)
-frame6.pack()
-
-filenameInput = Entry(frame6)
-filenameInput.pack(side=RIGHT)
-
-filenameLabel = Label(frame6, text="Filename : ")
-filenameLabel.pack(side=LEFT)
-
-# --------------------------
-
-blank = Label(window, text="")
-blank.pack()
-
-# --------------------------
-
-frame7 = Frame(window)
-frame7.pack()
-
-var = IntVar()
-rb1 = Radiobutton(frame7, text= "PNG", variable=var,value=1)
-rb2 = Radiobutton(frame7, text="JPG", variable=var,value=2)
-rb1.pack(side=LEFT)
-rb2.pack(side=RIGHT)
-
-# --------------------------
-
-blank = Label(window, text="")
-blank.pack()
-
-# --------------------------
-
 frame8 = Frame(window)
 frame8.pack()
 
@@ -308,5 +310,29 @@ blank.pack(side=LEFT)
 
 finalButton = Button(frame8, text="Generate", width=40, height=2, background='lightgreen', command=goQR)
 finalButton.pack(side=RIGHT)
+
+
+
+# -------------MENU-------------
+    
+menubar = Menu(window)
+
+menu1 = Menu(menubar, tearoff=0)
+menu1.add_command(label="Load", command=loadMenu)
+menu1.add_command(label="Reset", command=resetLoadedDatas)
+menu1.add_separator()
+menu1.add_command(label="Quit", command=window.quit)
+menubar.add_cascade(label="File", menu=menu1)
+
+menu2 = Menu(menubar, tearoff=0)
+menu2.add_command(label="About", command=openHelp)
+menubar.add_cascade(label="Help", menu=menu2)
+
+window.config(menu=menubar)
+
+
+# -------------END-------------
+
+
 
 window.mainloop()
