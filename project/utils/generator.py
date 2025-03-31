@@ -4,27 +4,30 @@ import subprocess
 import os
 from tkinter import Tk
 from tkinter.filedialog import asksaveasfilename
+from utils.Saver import saveDatas
 
-def createQrCode(url, boxSize, borderSize, bc, fc):
-    qr = QRCode(box_size=boxSize, border=borderSize)
-    qr.add_data(url)
-    img = qr.make_image(fill_color=fc, back_color=bc)
+SAVEFILE = "project/utils/csv/save.csv"
 
+def createQrCode(datas):
+    qr = QRCode(box_size=datas.boxSize, border=datas.borderSize)
+    qr.add_data(datas.url)
+    img = qr.make_image(fill_color=datas.fillColor, back_color=datas.bgColor)
 
     filepath = asksaveasfilename(defaultextension=".png", filetypes=[("PNG files", "*.png"), ("JPEG files", "*.jpg"), ("All Files", "*.*")])
 
     if filepath:
         img.save(filepath)
         print(f"Saved to : {filepath}")
+        saveDatas(SAVEFILE, datas)
     else:
         print("Not saved")
         
     return
 
-def showQR(url,boxSize,borderSize,bc,fc):
-    qr = QRCode(box_size= boxSize, border= borderSize)
-    qr.add_data(url)
-    img = qr.make_image(fill_color=fc, back_color=bc)
+def showQR(datas):
+    qr = QRCode(box_size=datas.boxSize, border=datas.borderSize)
+    qr.add_data(datas.url)
+    img = qr.make_image(fill_color=datas.fillColor, back_color=datas.bgColor)
     
     # Créer un fichier temporaire
     with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_file:

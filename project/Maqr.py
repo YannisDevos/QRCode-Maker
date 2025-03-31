@@ -10,7 +10,7 @@ from tkinter.filedialog import askopenfilename
 SAVEFILE = "project/utils/csv/save.csv"
 BC = "white"
 FC = "black"
-defaultDatas = qrDatas("default", 20,2, "white", "black")
+defaultDatas = qrDatas("", 20,2, "white", "black")
 
 def chooseBackColor():
     global BC
@@ -70,7 +70,7 @@ def goQR():
         if(url == ""):
             showwarning("Warning !","You have to enter a valid URL !")
         else :
-            createQrCode(url,box,border,BC,FC)
+            createQrCode(qrDatas(url, box, border, BC, FC))
             showinfo("Results","Your QR Code is ready !")
     else:
         showwarning("Warning !", "Invalid sizes !")
@@ -85,7 +85,7 @@ def printQR():
         if(url == ""):
             showwarning("Warning !","You have to enter a valid URL !")
         else:
-            showQR(url,box,border,BC,FC)
+            showQR(qrDatas(url, box, border, BC, FC))
     else:
         showwarning("Warning !", "Invalid sizes !")
     
