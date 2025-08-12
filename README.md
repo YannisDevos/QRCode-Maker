@@ -42,28 +42,16 @@ It's possible to see the QR code without save him with `Show QRCode` button.
 
 ## How to run
 
-### Windows
+Go to Maqr directory using vscode or other code editor and run main.py `OR` run Maqr.bat (**Windows**) / Maqr.sh (**Linux**). 
 
-To run the application on `Windows` you can :
-
-* Directly run Maqr.py file with your IDE
-* Run **Maqr.exe**
-
-Or run this command in a terminal while in the project folder :
+You can also run in your terminal using :
 
 ```
-> python .\Maqr.py
+> python main.py
 ```
 
-### Linux
-
-To run the application on `Linux` you can :
-
-* Directly run Maqr.py file with your IDE
-* Run **UnixMaqr.sh**
-
-Or run this command in a terminal while in the project folder :
+**OR**
 
 ```
-> python Maqr.py
+> python Maqr/main.py (If you are in main directory)
 ```

@@ -20,13 +20,13 @@ def chooseBackColor():
 
 def changeBackColor(color):
     global BC
-    fillLabel.config(text="     ", background=color)
+    backLabel.config(text="     ", background=color)
     BC = color
 
 
 def changeFillColor(color):
     global FC
-    backLabel.config(text="     ", background=color)
+    fillLabel.config(text="     ", background=color)
     FC = color
 
 
