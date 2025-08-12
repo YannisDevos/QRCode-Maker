@@ -144,9 +144,13 @@ def load_menu(data):
 
 
 window = Tk()
-window.geometry("450x600")
+window.geometry("")
 window.resizable(width=False, height=False)
-window.iconbitmap("./ico/logo.ico")
+
+if os.name == "nt":
+    window.iconbitmap("./ico/logo.ico")
+    print(os.name)
+
 window.title("Maqr")
 
 blank = Label(window, text="")
