@@ -1,9 +1,9 @@
 from tkinter import *
-from utils.generator import *
+from generator import *
 from tkinter import colorchooser
 from tkinter.messagebox import *
 from random import randint
-from utils.save import *
+from save import *
 
 BC = "white"
 FC = "black"
