@@ -148,7 +148,7 @@ window.geometry("")
 window.resizable(width=False, height=False)
 
 if os.name == "nt":
-    window.iconbitmap("./ico/logo.ico")
+    # window.iconbitmap("./ico/logo.ico")
     print(os.name)
 
 window.title("Maqr")
@@ -169,7 +169,7 @@ base_menu = Menu(window)
 file_menu = Menu(base_menu, tearoff=0)
 
 base_menu.add_cascade(label="File", menu=file_menu)
-file_menu.add_command(label="Load", command=lambda:load_menu(load_data("data.json")))
+file_menu.add_command(label="Load last saved", command=lambda:load_menu(load_data("data.json")))
 
 window.config(menu=base_menu)
 
