@@ -156,7 +156,7 @@ window.title("Maqr")
 blank = Label(window, text="")
 blank.pack()
 
-label = Label(window, text="QrCode GENERATOR", font=("SimSun",25))
+label = Label(window, text="Maqr", font=("Candara", 25))
 label.pack()
 
 blank = Label(window, text="")
@@ -322,13 +322,13 @@ blank.pack()
 frame8 = Frame(window)
 frame8.pack()
 
-showButton = Button(frame8, text="Show QRCode",width=15, height=2, command=printQR)
+showButton = Button(frame8, text="Show QRCode",width=20, height=3, background='lightgrey', command=printQR)
 showButton.pack(side=LEFT)
 
 blank = Label(frame8, text="")
 blank.pack(side=LEFT)
 
-finalButton = Button(frame8, text="Generate", width=40, height=2, background='lightgreen', command=goQR)
+finalButton = Button(frame8, text="Generate", width=30, height=3, background='lightgreen', command=goQR)
 finalButton.pack(side=RIGHT)
 
 window.mainloop()
