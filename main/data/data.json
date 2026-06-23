@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Test QR Code",
+    "url": "test.com",
+    "box_size": "20",
+    "border_size": "2",
+    "background_color": "#ffffff",
+    "fill_color": "#000000"
+  }
+]
