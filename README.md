@@ -37,10 +37,10 @@ You have to enter an URL, a file name and choose between PNG or JPG to save your
 
 It's possible to see the QR code without saving it thanks to the `Show QRCode` button.
 
-![MainQR](./res/img//MainQR.png)
-![ColorPick](./res/img///ColorPick.png)
-![QR](./res/img/QR.png)
-![PortfolioQR](./res/img/portfolio.png)
+![MainQR](./main/res/img//MainQR.png)
+![ColorPick](./main/res/img///ColorPick.png)
+![QR](./main/res/img/QR.png)
+![PortfolioQR](./main/res/img/portfolio.png)
 
 > :warning: **It is possible that colors that are too strong do not make the QR code work !**
 

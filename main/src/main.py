@@ -8,6 +8,8 @@ from save import *
 BC = "white"
 FC = "black"
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 def chooseBackColor():
     backColor = colorchooser.askcolor(title="QoloR")
     
@@ -68,7 +70,7 @@ def goQR():
             radButtonTxt = ".jpg"
             
         createQrCode(url,box,border,BC,FC,filename,radButtonTxt)
-        save_data({"name": filename, "url": url, "box_size": box, "border_size": border, "background_color": BC, "fill_color": FC})
+        save_data({"name": filename, "url": url, "box_size": box, "border_size": border, "background_color": BC, "fill_color": FC}, filename="data.json")
         showinfo("Results","Your QR Code is ready !")
         
 def printQR():
@@ -148,8 +150,8 @@ window.geometry("")
 window.resizable(width=False, height=False)
 
 if os.name == "nt":
-    # window.iconbitmap("./ico/logo.ico")
-    print(os.name)
+    icon_path = os.path.join(BASE_DIR, "..", "res", "ico", "logo.ico")
+    window.iconbitmap(default=icon_path)
 
 window.title("Maqr")
 

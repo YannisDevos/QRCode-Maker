@@ -1,19 +1,25 @@
 import json
+import os
 
-def save_data(data, filename='data.json'):
+FILE_PATH = "main/data/"
+
+def save_data(data, filename="data.json"):
     
-    datalist = load_data(filename)
+    datalist = load_data(FILE_PATH + filename)
     if datalist is None:
         datalist = []
         
     datalist.append(data)
+
+    os.makedirs("main/data", exist_ok=True)
     
-    with open(filename, 'w') as file:
+    with open(FILE_PATH + filename, 'w') as file:
         json.dump(datalist, file, indent=4)
         
-def load_data(filename='data.json'):
+def load_data(filename="data.json"):
+    print(f"Loading data from {filename}...")
     try:
-        with open(filename, 'r') as file:
+        with open(FILE_PATH + filename, 'r') as file:
             data = json.load(file)
             if len(data) == 0 or data is None:
                 print("No data found. Please save your data first.")
