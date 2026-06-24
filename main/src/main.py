@@ -4,6 +4,7 @@ from tkinter import colorchooser
 from tkinter.messagebox import *
 from random import randint
 from save import *
+from PIL import ImageTk
 
 BC = "white"
 FC = "black"
@@ -47,6 +48,17 @@ def changeColor(backColor, fillColor):
     changeBackColor(backColor)
     changeFillColor(fillColor)
 
+def seeWindow(photo, qrname):
+        qrshow = Toplevel(window)
+        qrshow.title(qrname)
+        qrshow.geometry("250x250")
+        qrshow.resizable(width=False, height=False)
+
+
+        lbl = Label(qrshow, image=photo)
+        lbl.image = photo
+        lbl.pack()
+
 
 def goQR():
     url = urlInput.get()
@@ -81,7 +93,9 @@ def printQR():
     if(url == ""):
         showwarning("Warning !","You have to enter a valid URL !")
     else:
-        showQR(url,box,border,BC,FC)
+        photo = ImageTk.PhotoImage(showQR(url,box,border,BC,FC))
+        seeWindow(photo, url)
+
         
     
 def resetColor():

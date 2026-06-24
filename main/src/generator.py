@@ -32,4 +32,6 @@ def showQR(url,boxSize,borderSize,bc,fc):
     qr = QRCode(box_size= boxSize, border= borderSize)
     qr.add_data(url)
     img = qr.make_image(fill_color=fc, back_color=bc)
-    img.show()
+    img = img.convert("RGB")
+    img.thumbnail((250, 250))
+    return img
