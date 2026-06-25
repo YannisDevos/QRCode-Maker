@@ -82,7 +82,7 @@ def goQR():
             radButtonTxt = ".jpg"
             
         createQrCode(url,box,border,BC,FC,filename,radButtonTxt)
-        save_data({"name": filename, "url": url, "box_size": box, "border_size": border, "background_color": BC, "fill_color": FC}, filename="data.json")
+        save_data({"name": filename, "url": url, "box_size": box, "border_size": border, "background_color": BC, "fill_color": FC})
         showinfo("Results","Your QR Code is ready !")
         
 def printQR():
@@ -132,20 +132,38 @@ def load_menu(data):
         return
     else:
         urlInput.delete(0, END)
-        urlInput.insert(0, data[0]["url"])
+        urlInput.insert(0, data[1])
         
         spin1.delete(0, END)
-        spin1.insert(0, data[0]["box_size"])
+        spin1.insert(0, data[2])
         
         spin2.delete(0, END)
-        spin2.insert(0, data[0]["border_size"])
+        spin2.insert(0, data[3])
         
         filenameInput.delete(0, END)
-        filenameInput.insert(0, data[0]["name"])
+        filenameInput.insert(0, data[4])
         
-        changeColor(data[0]["background_color"], data[0]["fill_color"])
+        changeColor(data[5], data[6])
 
+def show_saved():
+    try:
+        data = load_all()
+    except sqlite3.OperationalError:
+        showinfo("Info", "No data found. Please save your data first.")
+        return
+    else:
+        saved_window = Toplevel(window)
+        saved_window.title("Saved QR Codes")
+        saved_window.geometry("400x300")
+        saved_window.resizable(width=False, height=False)
 
+        listbox = Listbox(saved_window, width=50, height=15)
+        listbox.pack(pady=20)
+
+        for row in data:
+            listbox.insert(END, row)
+
+        listbox.bind("<<ListboxSelect>>", lambda event: load_menu(event.widget.get(event.widget.curselection()[0])))
 
 
 
@@ -185,7 +203,7 @@ base_menu = Menu(window)
 file_menu = Menu(base_menu, tearoff=0)
 
 base_menu.add_cascade(label="File", menu=file_menu)
-file_menu.add_command(label="Load last saved", command=lambda:load_menu(load_data("data.json")))
+file_menu.add_command(label="Load", command=lambda:show_saved())
 
 window.config(menu=base_menu)
 

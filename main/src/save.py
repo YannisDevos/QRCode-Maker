@@ -1,29 +1,39 @@
-import json
+import sqlite3
 import os
 
 FILE_PATH = "main/data/"
 
-def save_data(data, filename="data.json"):
-    
-    datalist = load_data(FILE_PATH + filename)
-    if datalist is None:
-        datalist = []
-        
-    datalist.append(data)
+def save_data(datas):
 
-    os.makedirs("main/data", exist_ok=True)
+    os.makedirs(FILE_PATH, exist_ok=True)
+
+    conn = sqlite3.connect(FILE_PATH + "data.db")
+    cursor = conn.cursor()
     
-    with open(FILE_PATH + filename, 'w') as file:
-        json.dump(datalist, file, indent=4)
-        
-def load_data(filename="data.json"):
-    print(f"Loading data from {filename}...")
-    try:
-        with open(FILE_PATH + filename, 'r') as file:
-            data = json.load(file)
-            if len(data) == 0 or data is None:
-                print("No data found. Please save your data first.")
-                return []
-            return data
-    except (FileNotFoundError, json.JSONDecodeError):
-        print("File not found. Please save your data first.")
+    cursor.execute('''CREATE TABLE IF NOT EXISTS qr_data
+                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                       url TEXT,
+                       box_size INTEGER,
+                       border_size INTEGER,
+                       name TEXT,
+                       background_color TEXT,
+                       fill_color TEXT)''')
+    
+    cursor.execute('''INSERT INTO qr_data (url, box_size, border_size, name, background_color, fill_color)
+                      VALUES (?, ?, ?, ?, ?, ?)''',
+                   (datas["url"], datas["box_size"], datas["border_size"], datas["name"], datas["background_color"], datas["fill_color"]))
+    
+    conn.commit()
+    conn.close()
+
+def load_all():
+    conn = sqlite3.connect(FILE_PATH + "data.db")
+    cursor = conn.cursor()
+
+    cursor.execute('''SELECT * FROM qr_data''')
+    
+    rows = cursor.fetchall()
+    
+    conn.close()
+    
+    return rows
